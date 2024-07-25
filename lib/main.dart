@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -154,7 +155,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                     )
                   },
-                  child: const Text("Login"),
+                  child: const Text(
+                    "Login",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               )
             ],
