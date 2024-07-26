@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,11 +7,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Spotify Mimic',
       home: MyHomePage(title: 'Spotify Mimic'),
     );
   }
@@ -20,15 +18,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -49,20 +38,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Colors.green,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Center(
           child: Text(
             widget.title,
@@ -79,36 +57,44 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
         child: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
           child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //
-            // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-            // action in the IDE, or press "p" in the console), to see the
-            // wireframe for each widget.
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              Container(
+                margin: const EdgeInsets.fromLTRB(0, 20, 0, 50.0),
+                child: const Image(
+                  width: 150.0,
+                  height: 150.0,
+                  image: AssetImage('assets/Spotify-Logo.png'),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 40.0),
+                child: const Text(
+                  "Music for everyone",
+                  style: TextStyle(color: Colors.white, fontSize: 30.0),
+                ),
+              ),
               Container(
                 width: 400.0,
                 padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
-                margin: const EdgeInsets.fromLTRB(0, 0, 0, 60.0),
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 20.0),
                 child: TextField(
                   controller: emailController,
                   style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.zero),
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.zero),
+                    ),
                     hintText: "johndoe@gmail.com",
+                    label: Text("Email"),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                     hintStyle: TextStyle(
-                      color: Color.fromARGB(124, 255, 255, 255),
+                      color: Color.fromARGB(44, 255, 255, 255),
                     ),
                   ),
                 ),
@@ -120,10 +106,18 @@ class _MyHomePageState extends State<MyHomePage> {
                   controller: passwordController,
                   style: const TextStyle(color: Colors.white),
                   decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.zero),
+                      borderSide: BorderSide(color: Colors.green),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.zero),
+                    ),
                     hintText: "Johndoe1234!",
+                    label: Text("Password"),
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
                     hintStyle: TextStyle(
-                      color: Color.fromARGB(124, 255, 255, 255),
+                      color: Color.fromARGB(44, 255, 255, 255),
                     ),
                   ),
                 ),
@@ -134,30 +128,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: const ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(Colors.green),
                   ),
-                  onPressed: () => {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'Email: ${emailController.text}',
-                              ),
-                              Text(
-                                'Password: ${passwordController.text}',
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    )
-                  },
+                  onPressed: () => {},
                   child: const Text(
-                    "Login",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    "Log in",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               )
