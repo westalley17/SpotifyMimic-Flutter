@@ -26,6 +26,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    // learn to conditionally render the dashboard or login page depending
+    // if their session is still active (SharedPreferences? idk it kinda broke everything)
     return const LoginPage();
   }
 }

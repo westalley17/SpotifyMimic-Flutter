@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:status_alert/status_alert.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -51,8 +51,8 @@ class _LoginPageState extends State<LoginPage> {
         if (response.statusCode == 200) {
           // the preferable outcome
           final responseData = jsonDecode(response.body);
-          final prefs = await SharedPreferences.getInstance();
-          await prefs.setString('SessionID', responseData.SessionID);
+          // final prefs = await SharedPreferences.getInstance();
+          // await prefs.setString('SessionID', responseData.SessionID);
           StatusAlert.show(
             context,
             title: "Successfully logged in!",
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               color: Colors.green,
             ),
             dismissOnBackgroundTap: true,
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(6.0),
           );
         } else {
           StatusAlert.show(
@@ -90,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.green,
           ),
           dismissOnBackgroundTap: true,
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(0.0),
           duration: const Duration(seconds: 10),
         );
       }
@@ -106,19 +106,47 @@ class _LoginPageState extends State<LoginPage> {
           color: Colors.red,
         ),
         dismissOnBackgroundTap: true,
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(6.0),
       );
     }
   }
 
+  /*
+    FIX SINGLE-SIGN-ON LATER WITH SHARED PREFERENCES!!!!
+   */
+
+  // Future<SharedPreferences> getSession() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   return prefs;
+  // }
+
   @override
-  void initState() async {
+  void initState() {
     super.initState();
-    final prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('SessionID') != "") {
-      // user has an existing Session so we need to sign them in automatically.
-      // we do this by calling a GET on the sessions endpoint and see if their session is still valid.
-    }
+    // final SharedPreferences prefs = getSession() as SharedPreferences;
+    // if (prefs.getString('SessionID') != "") {
+    //   // user has an existing Session so we need to sign them in automatically.
+    //   // we do this by calling a GET on the sessions endpoint and see if their session is still valid.
+    // }
+  }
+
+  Route _animateRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const RegisterPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOut;
+        final tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final offsetAnimation = animation.drive(tween);
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
+    );
   }
 
   @override
@@ -196,6 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                   width: 400.0,
                   padding: const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
                   child: TextField(
+                    obscureText: true,
                     controller: passwordController,
                     style: const TextStyle(color: Colors.white),
                     decoration: const InputDecoration(
@@ -245,12 +274,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RegisterPage(),
-                      ),
-                    );
+                    Navigator.of(context).push(_animateRoute());
                   },
                   child: const Text(
                     "Register",
