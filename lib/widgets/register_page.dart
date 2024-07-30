@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:first_app/config/env_config.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class _RegisterPageState extends State<RegisterPage> {
     // true: send a POST to backend to attempt user creation. User passed front-end validation!
     // false: make a pop-up alert show all the errors that the user has on their input fields.
     if (result.isEmpty) {
-      final url = Uri.parse('http://10.0.2.2:3030/api/users');
+      final url = Uri.parse('$baseUrl/api/users');
       final headers = {
         'Content-Type': 'application/json',
       };
